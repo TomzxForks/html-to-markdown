@@ -30,6 +30,13 @@ interface ElementInterface
     public function getValue();
 
     /**
+     * @param $value
+     *
+     * @return void
+     */
+    public function setValue($value);
+
+    /**
      * @return ElementInterface|null
      */
     public function getParent();

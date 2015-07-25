@@ -158,8 +158,10 @@ class HtmlConverter
      */
     protected function preProcess(ElementInterface $element)
     {
-        $converter = $this->environment->getConverterByTag($element->getTagName());
-        $converter->openElement($element);
+        $converters = $this->environment->getConvertersByTag($element->getTagName());
+        foreach ($converters as $converter) {
+            $converter->openElement($element);
+        }
     }
 
     /**
@@ -167,8 +169,10 @@ class HtmlConverter
      */
     protected function postProcess(ElementInterface $element)
     {
-        $converter = $this->environment->getConverterByTag($element->getTagName());
-        $converter->closeElement($element);
+        $converters = $this->environment->getConvertersByTag($element->getTagName());
+        foreach ($converters as $converter) {
+            $converter->closeElement($element);
+        }
     }
 
     /**
@@ -192,9 +196,16 @@ class HtmlConverter
             return false;
         }
 
-        $converter = $this->environment->getConverterByTag($tag);
+        $converters = $this->environment->getConvertersByTag($tag);
 
-        return $converter->convert($element);
+        foreach ($converters as $converter) {
+            $result = $converter->convert($element);
+            if ($result) {
+                return $result;
+            }
+        }
+
+        return $element->getValue();
     }
 
     /**

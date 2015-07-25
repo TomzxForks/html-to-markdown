@@ -80,6 +80,14 @@ class Element implements ElementInterface
     }
 
     /**
+     * @param $value
+     */
+    public function setValue($value)
+    {
+        $this->node->nodeValue = $value;
+    }
+
+    /**
      * @return ElementInterface|null
      */
     public function getParent()

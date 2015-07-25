@@ -27,7 +27,7 @@ final class Environment
     protected $config;
 
     /**
-     * @var ConverterInterface[]
+     * @var ConverterInterface[][]
      */
     protected $converters = array();
 
@@ -55,16 +55,16 @@ final class Environment
         }
 
         foreach ($converter->getSupportedTags() as $tag) {
-            $this->converters[$tag] = $converter;
+            $this->converters[$tag][] = $converter;
         }
     }
 
     /**
      * @param string $tag
      *
-     * @return ConverterInterface
+     * @return ConverterInterface[]
      */
-    public function getConverterByTag($tag)
+    public function getConvertersByTag($tag)
     {
         if (isset($this->converters[$tag])) {
             return $this->converters[$tag];
